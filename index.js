@@ -1,17 +1,36 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-   apiKey: "AIzaSyDZKL7sNgu6tKN4hAWKwHUh7h19WjbBN9E",
-   authDomain: "my-vocabulary-wors.firebaseapp.com",
-   projectId: "my-vocabulary-wors",
-   storageBucket: "my-vocabulary-wors.appspot.com",
-   messagingSenderId: "977001004109",
-   appId: "1:977001004109:web:2aa116b6a9f50accaff004"
-};
+import { 
+   saveWord ,
+   listWords
+} from './firebase.js'
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+window.addEventListener('DOMContentLoaded', () => {
+
+   listWords();
+   
+});
+
+
+const wordForm = document.getElementById("word-form");
+// console.log(wordForm)
+
+// Event seve word
+wordForm.addEventListener('submit', (e) => {
+   e.preventDefault();
+
+   const wordEnglish = wordForm['word-english'].value;
+   const wordSpanish = wordForm['word-spanish'].value;
+   const wordType = wordForm['word-type'].value;
+   // console.log(wordEnglish, wordSpanish, wordType);
+
+   try {
+      saveWord(wordEnglish, wordSpanish, wordType);
+      // wordForm['word-english'].value = "";
+      // wordForm['word-spanish'].value = "";
+      wordForm.reset();
+      
+   } catch (error) {
+      console.log(error);
+   }
+})
+
