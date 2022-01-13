@@ -1,6 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-firestore.js"
+import { 
+   getFirestore, 
+   collection, 
+   addDoc, 
+   getDocs, 
+   query, 
+   where,
+   onSnapshot
+} from "https://www.gstatic.com/firebasejs/9.6.2/firebase-firestore.js"
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -32,12 +41,7 @@ export const saveWord = (wordE, wordS, wordT) => {
 }
 
 // Función para listar wors
-export const listWords = async () => {
-   // console.log('Listando Words');
-   const query = await getDocs(collection(db, "words"));
-   console.log(query);
-   query.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`)
-   })
-}
+export const getWords = async() => getDocs(collection(db, 'words'));
+
+export const onGetWords = (callback) => onSnapshot(collection(db, 'words'), callback);
 

@@ -1,17 +1,38 @@
 
 import { 
    saveWord ,
-   listWords
+   getWords,
+   onGetWords
 } from './firebase.js'
 
-window.addEventListener('DOMContentLoaded', () => {
+const wordForm = document.getElementById("word-form");
+const wordContainer = document.getElementById("word-container");
 
-   listWords();
+window.addEventListener('DOMContentLoaded', async() => {
+
+   // const querySnapshot = await getWords();
+   // console.log(querySnapshot);
+
+   onGetWords((querySnapshot) => {
+      let html = '';
+
+      querySnapshot.forEach(doc => {
+         // console.log(doc.data());
+         const word = doc.data();
+         html += `
+            <div>
+               <h3>${word.wordEnglish}</h3>
+               <p>${word.wordSpanish}</p>
+            </div>
+         `
+      });
    
+      wordContainer.innerHTML = html;
+   })
+
 });
 
 
-const wordForm = document.getElementById("word-form");
 // console.log(wordForm)
 
 // Event seve word
